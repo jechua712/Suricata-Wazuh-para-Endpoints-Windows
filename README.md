@@ -1,8 +1,8 @@
-# Suricata & Wazuh Windows Auto-Deploy
+# Integración Suricata-Wazuh (Windows)
 
-**Suricata & Wazuh Windows Auto-Deploy** es un script desarrollado en PowerShell que automatiza por completo la instalación, configuración e integración de un sensor de red Suricata con un agente de Wazuh en endpoints de Windows. Está diseñado para facilitar el despliegue a escala en arquitecturas de ciberseguridad defensiva (Blue Team) y entornos corporativos.
+**Integración Suricata-Wazuh** es un script  en PowerShell que automatiza por completo la instalación, configuración e integración de un sensor de red Suricata con un agente de Wazuh en endpoints de Windows. Está diseñado para facilitar el despliegue a escala en enpoints con sistema operativo Windows.
 
-> ATENCION: Este script modifica la configuración de red y las tareas programadas del sistema. Se recomienda probarlo primero en un entorno de laboratorio o staging.
+> ATENCION: Este script modifica la configuración de red y las tareas programadas del sistema.
 
 ---
 
@@ -53,13 +53,16 @@ Para evitar errores de permisos de ejecución sin comprometer la seguridad perma
 
     ```powershell
     Set-ExecutionPolicy Bypass -Scope Process -Force
-    .\deploy.ps1
+    .\suriwz.ps1
     ```
 
 Aparecerá una consola interactiva que te guiará durante la instalación manual de Npcap y te pedirá seleccionar la interfaz de red que deseas monitorear. El resto del proceso es completamente automatizado.
 
 ---
 
+## Video de Demostración
+
+
 ## Aviso Legal
 
-Este software se proporciona tal cual, con fines educativos y de administración de sistemas. El autor, Jeshua Leonardo Maste Chable, no se hace responsable de posibles interrupciones de servicio o configuraciones erróneas derivadas de su uso en entornos de producción sin las pruebas previas adecuadas.
+Este software se proporciona tal cual, con fines educativos y de administración de sistemas. El autor no se hace responsable de posibles interrupciones de servicio o configuraciones erróneas derivadas de su uso en entornos de producción sin las pruebas previas adecuadas.
