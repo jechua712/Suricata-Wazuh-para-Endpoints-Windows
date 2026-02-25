@@ -38,7 +38,7 @@
 1. Clona el repositorio en el equipo Windows objetivo:
 
     ```powershell
-    git clone https://github.com/jechua712/Suricata-Wazuh-Windows.git](https://github.com/jechua712/Suricata-Wazuh-para-Endpoints-Windows.git
+    git clone https://github.com/jechua712/Suricata-Wazuh-para-Endpoints-Windows.git
     ```
 
 2. Accede al directorio del proyecto:
