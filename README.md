@@ -12,8 +12,8 @@
 * Detección interactiva de adaptadores de red y extracción automática del UUID.
 * Descarga de reglas actualizadas (Emerging Threats).
 * Edición automática y segura de archivos de configuración:
-  * Modificación de `suricata.yaml` mediante Expresiones Regulares (Regex) para definir variables de red y reglas.
-  * Inyección nativa de nodos XML en `ossec.conf` para el reenvío de logs (eve.json) hacia el SIEM.
+  * Modificación de `C:\Program Files\Suricata\Suricata.yaml` mediante Expresiones Regulares (Regex) para definir variables de red y reglas.
+  * Inyección nativa de nodos XML en `C:\Program Files (x86)\ossec-agent\ossec.conf` para el reenvío de logs (eve.json) hacia el SIEM.
 * Configuración de persistencia nativa creando una Tarea Programada ejecutada con privilegios máximos (NT AUTHORITY\SYSTEM).
 * Reinicio automático de servicios utilizando cmdlets nativos de PowerShell.
 
