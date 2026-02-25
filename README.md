@@ -8,7 +8,7 @@
 
 ## Caracteristicas
 
-* Descarga e instalación automática de dependencias (Suricata y Npcap).
+* Descarga e instalación automática de dependencias (Suricata y Npcap, últimas versiones).
 * Detección interactiva de adaptadores de red y extracción automática del UUID.
 * Descarga de reglas actualizadas (Emerging Threats).
 * Edición automática y segura de archivos de configuración:
