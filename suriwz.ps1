@@ -6,6 +6,7 @@
     lo configura con las reglas de Emerging Threats, lo enlaza mediante un adaptador
     de red (UUID), inyecta los logs eve.json de forma segura en el XML de Wazuh,
     y establece la persistencia como Tarea Programada ejecutada por SYSTEM.
+    Incluye comprobaciones de idempotencia para no reinstalar software existente.
 #>
 
 $ErrorActionPreference = "Stop"
@@ -50,7 +51,7 @@ $asciiArt = @"
 "@
 
 # --- RUTAS Y VARIABLES ---
-$urlSuricata = "https://www.openinfosecfoundation.org/download/windows/Suricata-7.0.14-1-64bit.msi"
+$urlSuricata = "https://www.openinfosecfoundation.org/download/windows/Suricata-7.0.13-1-64bit.msi"
 $urlNpcap = "https://npcap.com/dist/npcap-1.85.exe"
 $rulesUrl = "https://rules.emergingthreats.net/open/suricata-7.0.3/emerging-all.rules"
 
@@ -75,7 +76,7 @@ function Test-Administrator {
 Clear-Host
 Write-Host $asciiArt -ForegroundColor Cyan
 Write-Host "`n=========================================================================" -ForegroundColor Cyan
-Write-Host "   DEPLOYMENT AUTOMATIZADO: SURICATA + WAZUH by Jechua" -ForegroundColor Cyan
+Write-Host "   DEPLOYMENT AUTOMATIZADO: SURICATA IDS + NPCAP + WAZUH INTEGRATION" -ForegroundColor Cyan
 Write-Host "=========================================================================" -ForegroundColor Cyan
 
 if (-not (Test-Administrator)) {
@@ -85,27 +86,37 @@ if (-not (Test-Administrator)) {
 
 try {
     # =========================================================
-    # FASE 1: DESCARGA E INSTALACIÓN
+    # FASE 1: VERIFICACION E INSTALACION DE DEPENDENCIAS
     # =========================================================
-    Write-Host "`n[FASE 1] INSTALACION DE DEPENDENCIAS" -ForegroundColor Magenta
+    Write-Host "`n[FASE 1] VERIFICACION E INSTALACION DE DEPENDENCIAS" -ForegroundColor Magenta
     
     # 1.1 NPCAP
-    Write-Host "[*] Descargando Npcap..." -ForegroundColor Yellow
-    Invoke-WebRequest -Uri $urlNpcap -OutFile $fileNpcap -UseBasicParsing
-    Write-Host "    [ATENCION] Se abrira el instalador de Npcap. Por favor, instalalo manualmente (Siguiente -> Finalizar)." -ForegroundColor Cyan
-    $procNpcap = Start-Process -FilePath $fileNpcap -Wait -PassThru
-    Write-Host "    -> Npcap instalado." -ForegroundColor Green
+    $npcapSystemPath = "$env:WINDIR\System32\Npcap"
+    
+    if (Test-Path $npcapSystemPath) {
+        Write-Host "[*] Npcap ya se encuentra instalado. Omitiendo descarga." -ForegroundColor Green
+    } else {
+        Write-Host "[*] Descargando Npcap..." -ForegroundColor Yellow
+        Invoke-WebRequest -Uri $urlNpcap -OutFile $fileNpcap -UseBasicParsing
+        Write-Host "    [ATENCION] Se abrira el instalador de Npcap. Por favor, instalalo manualmente (Siguiente -> Finalizar)." -ForegroundColor Cyan
+        $procNpcap = Start-Process -FilePath $fileNpcap -Wait -PassThru
+        Write-Host "    -> Npcap instalado." -ForegroundColor Green
+    }
 
     # 1.2 SURICATA
-    Write-Host "[*] Descargando Suricata..." -ForegroundColor Yellow
-    Invoke-WebRequest -Uri $urlSuricata -OutFile $fileSuricata -UseBasicParsing
-    Write-Host "[*] Instalando Suricata en modo silencioso..." -ForegroundColor Yellow
-    $procSuricata = Start-Process -FilePath "msiexec.exe" -ArgumentList "/i `"$fileSuricata`" /qn /norestart" -Wait -PassThru
-    
-    if ($procSuricata.ExitCode -eq 0) {
-        Write-Host "    -> Suricata instalado correctamente." -ForegroundColor Green
+    if (Test-Path "$suricataExe") {
+        Write-Host "[*] Suricata ya se encuentra instalado en $suricataBaseDir. Omitiendo instalacion." -ForegroundColor Green
     } else {
-        Throw "Error al instalar Suricata. Codigo de salida: $($procSuricata.ExitCode)"
+        Write-Host "[*] Descargando Suricata..." -ForegroundColor Yellow
+        Invoke-WebRequest -Uri $urlSuricata -OutFile $fileSuricata -UseBasicParsing
+        Write-Host "[*] Instalando Suricata en modo silencioso..." -ForegroundColor Yellow
+        $procSuricata = Start-Process -FilePath "msiexec.exe" -ArgumentList "/i `"$fileSuricata`" /qn /norestart" -Wait -PassThru
+        
+        if ($procSuricata.ExitCode -eq 0) {
+            Write-Host "    -> Suricata instalado correctamente." -ForegroundColor Green
+        } else {
+            Throw "Error al instalar Suricata. Codigo de salida: $($procSuricata.ExitCode)"
+        }
     }
 
 
