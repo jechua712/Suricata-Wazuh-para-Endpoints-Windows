@@ -38,13 +38,13 @@
 1. Clona el repositorio en el equipo Windows objetivo:
 
     ```powershell
-    git clone https://github.com/jechua712/Suricata-Wazuh-Windows.git
+    git clone https://github.com/jechua712/Suricata-Wazuh-Windows.git](https://github.com/jechua712/Suricata-Wazuh-para-Endpoints-Windows.git
     ```
 
 2. Accede al directorio del proyecto:
 
     ```powershell
-    cd Suricata-Wazuh-Windows
+    cd Suricata-Wazuh-para-Endpoints-Windows
     ```
 
 3. Ejecuta PowerShell como **Administrador** e inicia el script. 
