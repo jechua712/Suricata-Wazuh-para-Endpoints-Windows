@@ -62,6 +62,8 @@ Aparecerá una consola interactiva que te guiará durante la instalación manual
 
 ## Video de Demostración
 
+https://youtu.be/Be5uNArpqwM
+
 
 ## Aviso Legal
 
