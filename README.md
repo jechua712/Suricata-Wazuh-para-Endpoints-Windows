@@ -37,5 +37,29 @@
 
 1. Clona el repositorio en el equipo Windows objetivo:
 
-```powershell
-git clone [https://github.com/jechua712/Suricata-Wazuh-Windows.git](https://github.com/jechua712/Suricata-Wazuh-Windows.git)
+    ```powershell
+    git clone [https://github.com/jechua712/Suricata-Wazuh-Windows.git](https://github.com/jechua712/Suricata-Wazuh-Windows.git)
+    ```
+
+2. Accede al directorio del proyecto:
+
+    ```powershell
+    cd Suricata-Wazuh-Windows
+    ```
+
+3. Ejecuta PowerShell como **Administrador** e inicia el script. 
+
+Para evitar errores de permisos de ejecución sin comprometer la seguridad permanente del sistema operativo, se recomienda evadir la política de ejecución únicamente para esta sesión de la siguiente manera:
+
+    ```powershell
+    Set-ExecutionPolicy Bypass -Scope Process -Force
+    .\deploy.ps1
+    ```
+
+Aparecerá una consola interactiva que te guiará durante la instalación manual de Npcap y te pedirá seleccionar la interfaz de red que deseas monitorear. El resto del proceso es completamente automatizado.
+
+---
+
+## Aviso Legal
+
+Este software se proporciona tal cual, con fines educativos y de administración de sistemas. El autor, Jeshua Leonardo Maste Chable, no se hace responsable de posibles interrupciones de servicio o configuraciones erróneas derivadas de su uso en entornos de producción sin las pruebas previas adecuadas.
